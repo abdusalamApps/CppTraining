@@ -10,7 +10,18 @@
 
 class Animal {
 public:
-    Animal(std::string name, int age) : name{name}, age{age} {}
+    Animal(std::string &name, int age) : name{name}, age{age} {
+        std::cout << "[lvalue constructor]\n";
+    }
+
+    Animal(std::string &&name, int age) : name{name}, age{age} {
+        std::cout << "[rvalue constructor]\n";
+    }
+
+    Animal(const Animal &animal) {
+        name = "[Copy] " + animal.name;
+        age = animal.age;
+    }
 
     virtual void makeSound() = 0;
 
@@ -22,6 +33,10 @@ public:
 
     int getAge() const {
         return this->age;
+    }
+
+    void setName(const std::string &newName) {
+        this->name = newName;
     }
 
 private:
